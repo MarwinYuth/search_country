@@ -15,9 +15,11 @@ export default function TableCountry() {
     setCountry(data);
   };
 
-  const handleChange = async (e) => {
+  const handleChange = (e) => {
     setCountryName({ name: e.target.value });
+  };
 
+  const searchCountry = async () => {
     if (countryName.name.trim() === "") {
       countryList();
       return;
@@ -26,14 +28,24 @@ export default function TableCountry() {
     setCountry(data);
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    searchCountry();
+  };
+
   return (
     <div className="flex gap-4 justify-between mt-14 flex-wrap">
       <div>
-        <input
-          value={countryName.name}
-          onChange={handleChange}
-          className="border border-red-500"
-        />
+        <form onSubmit={handleSearch}>
+          <input
+            value={countryName.name}
+            onChange={handleChange}
+            className="border border-red-500"
+          />
+          <button type="submit" className="border border-red-500 ml-2">
+            Search
+          </button>
+        </form>
       </div>
       {country.map((item, index) => {
         return <Card key={index} data={item} />;
